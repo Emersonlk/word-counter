@@ -1,0 +1,57 @@
+@layout('layout.main')
+
+@section('content')
+  <div class="columns">
+    <div class="column is-4-desktop is-offset-4-desktop is-6-tablet is-offset-3-tablet">
+      <h2 class="title is-4 has-text-centered">Entre no {{ appName() }}</h2>
+
+      {{ elIf('<div class="notification is-danger">$self</div>', getErrorFor('login'), hasErrorFor('login')) }}
+      
+      <form action="/entrar" method="post">
+        {{ csrfField() }}
+
+        <div class="field">
+          <label for="email" class="label">Email</label>
+          <div class="control">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="input"
+              value="{{ old('email', '') }}"
+              required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password" class="label">Senha</label>
+          <div class="control">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="input"
+              value="{{ old('password', '') }}"
+              required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" name="remember" id="remember">
+            Lembrar-me
+          </label>
+        </div>
+
+        <div class="control">
+          <button type="submit" class="button is-link is-fullwidth">Entrar</button>
+        </div>
+      </form>
+
+      <p class="has-text-centered" style="margin-top: 10px">
+        Não tem uma conta?
+        <a href="/cadastrar">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
+@endsection

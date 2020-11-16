@@ -1,0 +1,51 @@
+@layout('layout.main')
+
+@section('content')
+  {{ elIf('<div class="notification is-danger">$self</div>', getErrorFor('file'), hasErrorFor('file')) }}
+
+  <div class="is-flex is-flex-direction-column is-align-items-center">
+    <p class="content is-medium">Apenas arquivos nos formatos <b>txt</b>, <b>doc</b>, <b>docx</b> e <b>pdf</b> são aceitos</p>
+    
+    <form method="POST" action="/novo" enctype="multipart/form-data">
+      {{ csrfField() }}
+      
+      <div class="field" id="file">
+        <div class="file is-centered is-boxed has-name">
+          <label class="file-label">
+            <input class="file-input" type="file" name="file">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Escolher arquivo…
+              </span>
+            </span>
+            <span class="file-name">
+              Nenhum arquivo escolhido
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="button is-link">Enviar</button>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    const fileInput = document.querySelector('#file input[type=file]')
+    const submitButton = document.querySelector('button[type=submit]')
+    
+    fileInput.onchange = () => {
+      if (fileInput.files.length > 0) {
+        const fileName = document.querySelector('#file .file-name')
+        fileName.textContent = fileInput.files[0].name
+      }
+    }
+
+    submitButton.onclick = () => {
+      fileInput.onclick = (e) => { e.preventDefault() }
+      submitButton.classList.add('is-loading')
+    }
+  </script>
+@endsection

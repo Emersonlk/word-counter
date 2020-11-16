@@ -1,0 +1,46 @@
+@layout('layout.main')
+
+@section('content')
+  <h1 class="title has-text-centered mb-6">Detalhes do envio</h1>
+
+  <div class="columns is-multiline">
+    <div class="column is-full box p-4">
+      <h5 class="title is-4">
+        <a href="#!" id="toggler"><i class="fas fa-toggle-on"></i> Alternar visualização do conteúdo</a>
+      </h5>
+      <pre id="content">{{ file.content }}</pre>
+    </div>
+
+    <div class="column is-full box p-4">
+      <table class="table is-striped is-hoverable is-fullwidth" id="tabela">
+        <thead>
+          <tr>
+            <th>Palavra</th>
+            <th>Quantidade</th>
+            <th>Porcentagem</th>
+          </tr>
+
+        </thead>
+        <tbody>
+          @each(row in tableData)
+            <tr>
+              <td>{{ row[0] }}</td>
+              <td>{{ row[1] }}</td>
+              @set('percentage', ((row[1] / filteredContent.length) * 100))
+              <td>{{ percentage.toFixed(2) }}%</td>
+            </tr>
+          @endeach
+        </tbody>
+      </table>
+    </div>
+  </div>  
+
+  <script type="text/javascript">
+    const toggler = document.querySelector('#toggler')
+    const content = document.querySelector('#content')
+
+    toggler.onclick = () => {
+      content.classList.toggle('is-hidden')
+    }
+  </script>
+@endsection

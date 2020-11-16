@@ -1,0 +1,64 @@
+@layout('layout.main')
+
+@section('content')
+  <div class="columns">
+    <div class="column is-4-desktop is-offset-4-desktop is-6-tablet is-offset-3-tablet">
+      <h2 class="title is-4 has-text-centered">Cadastre-se no {{ appName() }}</h2>
+
+      {{ elIf('<div class="notification is-danger">$self</div>', getErrorFor('register'), hasErrorFor('register')) }}
+      
+      <form action="/cadastrar" method="post">
+        {{ csrfField() }}
+
+        <div class="field">
+          <label for="name" class="label">Nome completo</label>
+          <div class="control">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="input"
+              value="{{ old('name', '') }}"
+              required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email" class="label">Email</label>
+          <div class="control">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="input {{ hasErrorFor('email') ? 'is-danger' : '' }}"
+              value="{{ old('email', '') }}"
+              required>
+          </div>
+          {{ elIf('<span class="help is-danger">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
+        </div>
+
+        <div class="field">
+          <label for="password" class="label">Senha</label>
+          <div class="control">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="input"
+              value="{{ old('password', '') }}"
+              required>
+          </div>
+        </div>
+
+        <div class="control">
+          <button type="submit" class="button is-link is-fullwidth">Cadastrar</button>
+        </div>
+      </form>
+
+      <p class="has-text-centered" style="margin-top: 10px">
+        Já possui uma conta?
+        <a href="/entrar">Entre</a>
+      </p>
+    </div>
+  </div>
+@endsection

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ appName() }}</title>
+  <link href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
+  {{ style('bulma.min') }}
+  {{ script('fontawesome.min') }}
+</head>
+<body>
+  <nav class="navbar is-link">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <i class="fas fa-receipt mr-3"></i>
+          {{ appName() }}
+        </a>
+
+        <a id="navbarBurger" class="navbar-burger">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarMenu" class="navbar-menu">
+        <div class="navbar-end">
+          @loggedIn
+            <a href="/novo" class="navbar-item">
+              Novo
+            </a>
+            <a href="/historico" class="navbar-item">
+              Histórico
+            </a>
+            <a href="/sair" class="navbar-item">
+              Sair
+            </a>
+          @else
+            <a href="/entrar" class="navbar-item">
+              Entrar
+            </a>
+            <a href="/cadastrar" class="navbar-item">
+              Cadastrar-se
+            </a>
+          @endloggedIn
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      @!section('content')
+    </div>
+  </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+  <script> 
+
+    $(document).ready( function () {
+      $('#tabela').DataTable({
+        "order": [[ 1, "desc" ]],
+        "info": false,
+        "language": {
+            "lengthMenu": "Mostrando _MENU_ registros por página",
+            "zeroRecords": "Nada encontrado!",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "Nenhum registro disponivel",
+            "infoFiltered": "(Filtrado de _MAX_ registros no total)",
+            "search": "Pesquisar"
+        }
+      });});
+  
+  </script>
+
+  <script type="text/javascript">
+    const navbarBurger = document.querySelector('#navbarBurger')
+    const navbarMenu = document.querySelector('#navbarMenu')
+
+    navbarBurger.onclick = () => {
+      navbarMenu.classList.toggle('is-active')
+    }
+  </script>
+</body>
+</html>

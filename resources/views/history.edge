@@ -1,0 +1,16 @@
+@layout('layout.main')
+
+@section('content')
+  <h1 class="title has-text-centered mb-6">Histórico de envios</h1>
+
+  <div class="columns is-multiline">
+    @each(file in files)
+      <div class="column is-full box p-4">
+        <h5 class="title is-4"><a href="/detalhes/{{ file.id }}">{{ file.name }}</a></h5>
+        <p class="subtitle is-6">{{ file.author.name }}</p>
+      </div>
+    @else
+      <div class="column notification is-warning has-text-centered">Nenhum arquivo foi enviado</div>
+    @endeach
+  </div>
+@endsection
